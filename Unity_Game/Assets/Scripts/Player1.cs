@@ -3,29 +3,29 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 public class Player1 : MonoBehaviour
-{    
-    private Vector2 moveInput;
+{
 
+    [Header("Chngelbe Values")]
     [SerializeField] private float speed;
+    [SerializeField] private float gravityScale;
+    [SerializeField] private float turnSpeed;
+    [SerializeField] private float jumpHeight;
 
+    private Vector2 moveInput;
+    private bool jumpInput;
+
+    [Header("Component References")]
     [SerializeField] CharacterController CharacterController;
+    [SerializeField] Animator Animator;
 
     private float verticalVelocity = 0f;
-
-    [SerializeField] private bool jumpInput;
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private float gravityScale;
-
-    
-
-
 
 
     #region Input Handling Methods
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        
+
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -34,30 +34,39 @@ public class Player1 : MonoBehaviour
         {
             jumpInput = true;
         }
-        
+
     }
- #endregion
+    #endregion
 
     #region Unity Callbacks
     private void Update()
+    {
+        UpdateMovement();
+        UpdateAnimator();
+    }
+
+    #endregion
+
+    #region CharacetrControlMethods
+    void UpdateMovement()
     {
         Vector3 moveInput3D = new Vector3(moveInput.x, 0f, moveInput.y);
 
         Vector3 motion = moveInput3D * speed * Time.deltaTime;
 
         UpdatePlayerRotation(moveInput3D);
-       
+
 
         if (CharacterController.isGrounded)
         {
             verticalVelocity = -3f;
-            
+
 
         }
         else
         {
-            verticalVelocity += Physics.gravity.y*gravityScale * Time.deltaTime;
-            
+            verticalVelocity += Physics.gravity.y * gravityScale * Time.deltaTime;
+
         }
         if (jumpInput && CharacterController.isGrounded)
         {
@@ -69,29 +78,97 @@ public class Player1 : MonoBehaviour
 
         CharacterController.Move(motion);
 
+        void UpdatePlayerRotation(Vector3 moveInput)
+        {
+            if (moveInput.sqrMagnitude <= 0.01f)
+            {
+                return;
+            }
+            Vector3 playerRotation = transform.rotation.eulerAngles;
+
+            playerRotation.y = GetAngleFromVector(moveInput);
+
+            Quaternion targetRotation = Quaternion.Euler(playerRotation);
+
+            
+
+            float maxDegrees = turnSpeed * Time.deltaTime;
+
+            transform.rotation =Quaternion.RotateTowards(transform.rotation, targetRotation, maxDegrees);
+
+        }
+        float GetAngleFromVector(Vector3 direction)
+        {
+            
+
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+            
+
+            return rotation.eulerAngles.y;
+
+        }
     }
 
     #endregion
 
-  
-void UpdatePlayerRotation(Vector3 moveInput)
+    #region Other Methods
+     void UpdateAnimator()
     {
-        if (moveInput.sqrMagnitude <= 0.01f)
+        bool jump = false;
+        bool fall = false;
+
+        if (CharacterController.isGrounded)
         {
-            return;
+            jump = false;
+            fall = false;
         }
-        Vector3 playerRotation = transform.rotation.eulerAngles;
+        else
+        {
+            if(verticalVelocity >= 0f)
+            {
+                jump = true;
+            }
+            else
+            {
+                fall = true;
+            }
+        }
 
-        playerRotation.y = GetAngleFromVector(moveInput);
+        Vector3 velocity = CharacterController.velocity;
+        velocity.y = 0f;
+        float speed = velocity.magnitude;
 
-        transform.rotation = Quaternion.Euler(playerRotation);
+        Animator.SetFloat("Speed", speed);
+        Animator.SetBool("Jump", jump);
+        Animator.SetBool("fall", fall);
+
     }
-    float GetAngleFromVector(Vector3 direction)
-    {
 
-        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+ 
+    #endregion
 
-        return rotation.eulerAngles.y;
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
