@@ -4,9 +4,9 @@ using UnityEngine.UIElements;
 
 public class PlayerHeath : MonoBehaviour
 {
-     int points = 6;
+     [SerializeField] int points = 6;
 
-    public int Points
+    public int HealthPoints
     { get
         {
             return points;
@@ -17,6 +17,7 @@ public class PlayerHeath : MonoBehaviour
             bool wasAlive = points > 0;
 
             points = value;
+
             if (points <= 0 && wasAlive)
             {
                 Died.Invoke();
@@ -27,11 +28,18 @@ public class PlayerHeath : MonoBehaviour
     public UnityEvent Damaged;
     public UnityEvent Died;
 
+    public bool Alive => HealthPoints > 0;
+
 
     public void Damage(int damage)
     {
-        points -= damage;
-        Damaged.Invoke();
+        HealthPoints -= damage;
+
+        if (Alive)
+        {
+            Damaged.Invoke();
+        }
+       
     }
 
 }

@@ -22,6 +22,7 @@ public class Player1 : MonoBehaviour
     [SerializeField] Animator Animator;
 
     private float verticalVelocity = 0f;
+    bool InputEnabled = true;
 
     [Header("Unity Events")]
     public UnityEvent Jumped;
@@ -42,12 +43,22 @@ public class Player1 : MonoBehaviour
     #region Input Handling Methods
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (InputEnabled == false)
+        {   
+            moveInput = Vector2.zero;
+            return;
+        }
         moveInput = context.ReadValue<Vector2>();
 
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (InputEnabled == false)
+        {
+            jumpInput = false;
+            return;
+        }
         if (context.performed)
         {
             jumpInput = true;
@@ -172,6 +183,12 @@ public class Player1 : MonoBehaviour
         Animator.SetBool("Jump", jump);
         Animator.SetBool("fall", fall);
 
+    }
+
+    public void OnDeath()
+    {
+        Animator.SetBool("Alive", false);
+        InputEnabled = false;
     }
 
  
