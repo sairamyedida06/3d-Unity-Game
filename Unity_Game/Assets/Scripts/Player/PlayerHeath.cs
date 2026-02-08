@@ -30,6 +30,25 @@ public class PlayerHeath : MonoBehaviour
 
     public bool Alive => HealthPoints > 0;
 
+    private void Update()
+    {
+        if (Alive)
+        {
+            if (transform.position.y < -1f)
+            {
+                OnFall();
+
+            }
+        }
+    }
+
+
+    void OnFall()
+    {
+        Damage(points);
+   
+    }
+
 
     public void Damage(int damage)
     {
