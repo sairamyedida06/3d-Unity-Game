@@ -11,6 +11,9 @@ public class Uimanager : MonoBehaviour
 
     [SerializeField] GameObject GameOverMenu;
 
+    public HealthDisplay HealthDisplay;
+
+
     private void Awake()
     {
         Instance = this;

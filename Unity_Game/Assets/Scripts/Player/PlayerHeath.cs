@@ -41,6 +41,8 @@ public class PlayerHeath : MonoBehaviour
 
             }
         }
+
+        Uimanager.Instance.HealthDisplay.HealthPoints = this.points;
     }
 
 
