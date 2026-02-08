@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,7 @@ public class Uimanager : MonoBehaviour
     public void ShowGameOverMenu()
     {
         GameOverMenu.SetActive(true);
+        ClearCameraTraget();
     }
 
 
@@ -31,5 +33,14 @@ public class Uimanager : MonoBehaviour
         GameOverMenu.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    void ClearCameraTraget()
+    {
+        var cam = (CinemachineCamera)CinemachineBrain.GetActiveBrain(0).ActiveVirtualCamera;
+
+        cam.Target.TrackingTarget = null;
+    }
+
+
 
 }
