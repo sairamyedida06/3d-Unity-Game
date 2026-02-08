@@ -96,7 +96,7 @@ public class Spikes : MonoBehaviour
     }
 
     [ContextMenu("Activate")]
-    void Activate()
+    public void Activate()
     {
         if (state == EState.Idle)
         {
