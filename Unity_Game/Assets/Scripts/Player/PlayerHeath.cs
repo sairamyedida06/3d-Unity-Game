@@ -21,6 +21,7 @@ public class PlayerHeath : MonoBehaviour
             if (points <= 0 && wasAlive)
             {
                 Died.Invoke();
+                Uimanager.Instance.ShowGameOverMenu();
             }
         }
     }
@@ -57,6 +58,7 @@ public class PlayerHeath : MonoBehaviour
         if (Alive)
         {
             Damaged.Invoke();
+           
         }
        
     }
