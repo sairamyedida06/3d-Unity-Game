@@ -10,8 +10,8 @@ public class Uimanager : MonoBehaviour
 
 
     [SerializeField] GameObject GameOverMenu;
-
     public HealthDisplay HealthDisplay;
+    public ProgressDisplay ProgressDisplay;
 
 
     private void Awake()
