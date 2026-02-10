@@ -8,4 +8,6 @@ public class PlayerEffects : MonoBehaviour
     {
         Instantiate(LandingFX, transform.position,Quaternion.identity);
     }
+
+    
 }

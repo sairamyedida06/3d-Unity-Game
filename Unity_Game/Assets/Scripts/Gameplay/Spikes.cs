@@ -42,6 +42,7 @@ public class Spikes : MonoBehaviour
         {
             SpikesMesh.SetActive(true);
         }
+
         if(state == EState.TransitionToActive )
         {
             audioSourse.PlayOneShot(activationSound);
@@ -61,6 +62,7 @@ public class Spikes : MonoBehaviour
         if (state == EState.TransitionToActive) 
         {
             Vector3 P = Vector3.Lerp(SpikesIdelePosition, SpikesActivePosition, timer/ TransitionDuraion);
+
             SpikesMesh.transform.localPosition = P;
 
             if(timer >= TransitionDuraion)

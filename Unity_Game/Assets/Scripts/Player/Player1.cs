@@ -74,6 +74,19 @@ public class Player1 : MonoBehaviour
         UpdateAnimator();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        var levelExit = other.GetComponent<LevelExit>();
+
+        if(levelExit != null)
+        {
+            levelExit.ExitLevel();
+        }
+    }
+
+
+
+
     #endregion
 
     #region CharacetrControlMethods
@@ -148,6 +161,9 @@ public class Player1 : MonoBehaviour
             return rotation.eulerAngles.y;
 
         }
+
+
+
     
 
     #endregion

@@ -8,6 +8,7 @@ public class LevelPorgressTracker : MonoBehaviour
 
     [SerializeField] List<GameObject> Coins;
 
+    [SerializeField] LevelExit LevelExit;
 
     private void Start()
     {
@@ -16,6 +17,8 @@ public class LevelPorgressTracker : MonoBehaviour
 
     private void Update()
     {
+        int previousremaiCoins = RemainingCoins;
+            
         for (int i = Coins.Count - 1; i >= 0; i--) 
         {
             var coin = Coins[i];
@@ -30,6 +33,10 @@ public class LevelPorgressTracker : MonoBehaviour
 
         Uimanager.Instance.ProgressDisplay.SetRemainigCoints(RemainingCoins);
 
+        if(previousremaiCoins != RemainingCoins && RemainingCoins == 0)
+        {
+            LevelExit.GateOpen();
+        }
 
 
     }

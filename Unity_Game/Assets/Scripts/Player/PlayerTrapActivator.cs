@@ -14,7 +14,7 @@ public class PlayerTrapActivator : MonoBehaviour
 
         if (trap != null) 
         {
-            Debug.Log("Player");
+            
             trap.Activate();
             Damageplayer();
 
