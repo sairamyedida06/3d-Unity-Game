@@ -8,18 +8,18 @@ public class PlayerTrapActivator : MonoBehaviour
     {
         health = GetComponent<PlayerHeath>();
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        Spikes trap = other.GetComponent<Spikes>();
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Spikes trap = other.GetComponent<Spikes>();
 
-        if (trap != null) 
-        {
+    //    if (trap != null) 
+    //    {
             
-            trap.Activate();
-            Damageplayer();
+    //        trap.Activate();
+    //        Damageplayer();
 
-        }
-    }
+    //    }
+    //}
 
 
 

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-public class PlayerHeath : MonoBehaviour
+public class PlayerHeath : MonoBehaviour,IDamageable
 {
      [SerializeField] int points = 6;
 
@@ -16,7 +16,7 @@ public class PlayerHeath : MonoBehaviour
         {
             bool wasAlive = points > 0;
 
-            points = value;
+            points = Mathf.Max(value, 0);
 
             if (points <= 0 && wasAlive)
             {
