@@ -65,6 +65,21 @@ public class Player1 : MonoBehaviour
         }
 
     }
+
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("button pressed");
+            Uimanager.Instance.TogglePause();
+        }
+
+    }
+
+
+
+
     #endregion
 
     #region Unity Callbacks

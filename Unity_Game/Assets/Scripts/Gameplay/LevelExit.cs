@@ -21,7 +21,7 @@ public class LevelExit : MonoBehaviour
 
     public void ExitLevel()
     {
-        SceneManager.LoadScene(targetScene);
+        SceneManager.LoadScene("Menu");
     }
 
     private void Update()
